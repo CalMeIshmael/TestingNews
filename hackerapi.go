@@ -14,50 +14,39 @@ import "strconv"
  */
 
 func ParseJson(string Json) []int {
-	stringSplit := strings.Split(Json, ",")
-	for index, elem := range stringSplit {
+	var intJSON []int
+	noComma := strings.Split(Json, ",")
+	for index, elem := range noComma {
 		if index == 0 {
-			o, err
-
-
-
-
-
-
-
-}
-
-
-
-
-func getNewStories() []int {
-	var numbers []int
-	resp, _ := http.Get("https://hacker-news.firebaseio.com/v0/topstories.json")
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	stringBody := string(body[:]) //initializes new story key values as string
-	newStringBody := strings.Split(stringBody, ",")
-	for index, elem := range newStringBody {
-		if index == 0 {
-			i, err := strconv.ParseInt(strings.Replace(elem, "[", "", -1), 10, 32)
+			ParsedElem, err := strconv.ParseInt(strings.Replace(elem, "[", "", -1), 10, 32)
 			if err == nil {
-				numbers = append(numbers, int(i))
+				intJSON = append(intJSON, int(ParsedElem))
 			}
-		} else if index == len(newStringBody)-1 {
-			i, err := strconv.ParseInt(strings.Replace(elem, "]", "", -1), 10, 32)
+		} else if index == len(noComma)-1 {
+			ParsedElem, err := strconv.ParseInt(strings.Replace(elem, "]", "", -1), 10, 32)
 			if err == nil {
-				numbers = append(numbers, int(i))
+				intJSON = append(intJSON, int(ParsedElem))
 			}
 		} else {
-			i, err := strconv.ParseInt(elem, 10, 32)
+			ParsedElem, err := strconv.ParseInt(elem, 10, 32)
 			if err == nil {
-				numbers = append(numbers, int(i))
+				intJSON = append(intJSON, int(ParsedElem))
 			}
 		}
 	}
+	return intJSON
+}
 
-	return numbers
+func NewsHttpGet(Link string) string {
+	resp, _ := http.Get(Link)
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	return string(body[:]) //initializes new story key values as string
+}
+
+func getNewStories() []int {
+	var NewStories string = "https://hacker-news.firebaseio.com/v0/newstories.json")
+	return ParseJSON(NewsHttpGet(NewStories))
 }
 
 func main() {
