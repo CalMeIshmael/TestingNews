@@ -49,6 +49,31 @@ func getNewStories() []int {
 	return ParseJSON(NewsHttpGet(NewStories))
 }
 
+func getTopStories() []int {
+	var TopStories string = "https://hacker-news.firebaseio.com/v0/topstories.json")
+	return ParseJSON(NewsHttpGet(TopStories))
+}
+
+func getBestStories() []int {
+	var BestStories string = "https://hacker-news.firebaseio.com/v0/beststories.json")
+	return ParseJSON(NewsHttpGet(BestStories))
+}
+
+func getAskStories() []int {
+	var AskStories string = "https://hacker-news.firebaseio.com/v0/askstories.json")
+	return ParseJSON(NewsHttpGet(AskStories))
+}
+
+func getShowStories() []int {
+	var ShowStories string = "https://hacker-news.firebaseio.com/v0/showtories.json")
+	return ParseJSON(NewsHttpGet(ShowStories))
+}
+
+func getJobStories() []int {
+	var JobStories string = "https://hacker-news.firebaseio.com/v0/jobstories.json")
+	return ParseJSON(NewsHttpGet(JobStories))
+}
+
 func main() {
 	client := gophernews.NewClient()
 	newStories := getNewStories()
